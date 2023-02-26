@@ -21,6 +21,10 @@ import * as actions from './actions';
 // store.state = 1;
 // console.log(store);
 
+store.subscribe(()=>{
+    console.log("Store changed!");
+});
+
 store.dispatch(actions.bugAdded("Bug 1"));
 console.log(store.getState());
 
