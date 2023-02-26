@@ -16,7 +16,12 @@
 // console.log(store.getState());
 
 import store from "./customeStore";
-store.state = 1;
-console.log(store);
+import * as actions from './actions';
+
+// store.state = 1;
+// console.log(store);
+
+store.dispatch(actions.bugAdded("Bug 1"));
+console.log(store.getState());
 
 
