@@ -4,7 +4,7 @@ export function bugAdded(description){
     return {
         type: actions.BUG_ADDED ,
         payload: {
-        description: "Bug1"
+        description: description
         }
     };
 };
@@ -14,7 +14,7 @@ export const bugAddedArrow = description => ({
     
         type: actions.BUG_ADDED ,
         payload: {
-        description: "Bug1"
+        description: description //can re write using short hand syntax - description
         }
     
 });
@@ -23,8 +23,17 @@ export function bugRemoved(id){
     return {
         type: actions.BUG_REMOVED ,
         payload: {
-        id:1
+        id:id
         }
     };
 };
+
+export function bugResolved(id){
+    return {
+        type: actions.BUG_RESOLVED,
+        payload : {
+            id:id
+        }
+    }
+}
 
