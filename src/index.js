@@ -15,7 +15,7 @@
 
 // console.log(store.getState());
 
-import store from "./customeStore";
+import store from "./store";
 import * as actions from './actions';
 
 // store.state = 1;
