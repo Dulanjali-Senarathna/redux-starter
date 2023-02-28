@@ -42,5 +42,9 @@ console.log(store.getState());
 //way2
 const unResolved = getUnresolvedBugs(store.getState());
 console.log(unResolved);
+//if const b = getUnresolvedBugs(store.getState());
+//console.log(unResolved === b) return false.it means when re call this function returns diffrent outputs. to avoid this, we use memoization
+//to implement this we use librabry called reselect
+//after using memization, abouve output return true
 
 

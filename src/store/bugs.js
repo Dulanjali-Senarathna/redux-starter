@@ -1,4 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 //reducer
 //[] simple array to represent store
 // with if else
@@ -23,8 +24,16 @@ const slice = createSlice({
     }
 });
 
-//selector for filter unresolved bugs
-export const getUnresolvedBugs = state => state.entities.bugs.filter(bug=> !bug.resolved);
+//selector for filter unresolved bugs - without memoization
+//export const getUnresolvedBugs = state => state.entities.bugs.filter(bug=> !bug.resolved);
+
+//create memoization selector
+export const getUnresolvedBugs = createSelector(
+    state => state.entities.bugs,
+    //we can pass multiple selector functions in here
+    state => state.entities.projects,
+    (bugs, projects) => bugs.filter(bug=> !bug.resolved) //  if bugs not change, result is not execute again
+)
 
 export const {bugAddedArrow, bugResolved} = slice.actions
 export default slice.reducer;
