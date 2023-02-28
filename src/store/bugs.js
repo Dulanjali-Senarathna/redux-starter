@@ -1,10 +1,53 @@
-import * as actions from './actionTypes';
+//action types
+const BUG_ADDED = "bugAdded";
+ const BUG_REMOVED = "bugRemoved";
+ const BUG_RESOLVED = "bugResolved";
+
+//action creators
+export function bugAdded(description){
+    return {
+        type: BUG_ADDED ,
+        payload: {
+        description: description
+        }
+    };
+};
+
+//re-write above code using arrow function
+export const bugAddedArrow = description => ({
+    
+        type: BUG_ADDED ,
+        payload: {
+        description: description //can re write using short hand syntax - description
+        }
+    
+});
+
+export function bugRemoved(id){
+    return {
+        type: BUG_REMOVED ,
+        payload: {
+        id:id
+        }
+    };
+};
+
+export function bugResolved(id){
+    return {
+        type: BUG_RESOLVED,
+        payload : {
+            id:id
+        }
+    }
+}
+
+//reducer
 //[] simple array to represent store
 // with if else
 let lastId=0;
 
 export default function reducer(state = [], action){
-    if(action.type === actions.BUG_ADDED)
+    if(action.type === BUG_ADDED)
     return[
         ...state,
         {
@@ -13,10 +56,10 @@ export default function reducer(state = [], action){
             resolved : false
         }
     ];
-    else if(action.type === actions.BUG_REMOVED)
+    else if(action.type === BUG_REMOVED)
     return state.filter(bug=> bug.id !== action.payload.id);
 
-    else if(action.type === actions.BUG_RESOLVED)
+    else if(action.type === BUG_RESOLVED)
     return state.map(bug=> bug.id !== action.payload.id ? bug : {...bug , resolved: true});
 
     return state;
@@ -43,6 +86,3 @@ export default function reducer(state = [], action){
 //     }
    
 // }
-
-
-
