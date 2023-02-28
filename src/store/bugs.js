@@ -1,4 +1,4 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction , createReducer} from "@reduxjs/toolkit";
 
 // const bugUpdated = createAction("bugUpdated");
 // console.log(bugUpdated({id:1}));
@@ -62,24 +62,40 @@ export const bugResolved = createAction("bugResolved");
 // with if else
 let lastId=0;
 
-export default function reducer(state = [], action){
-    if(action.type === bugAddedArrow.type)
-    return[
-        ...state,
-        {
-            id : ++lastId,
-            description : action.payload.description,
-            resolved : false
-        }
-    ];
-    else if(action.type === bugRemoved.type)
-    return state.filter(bug=> bug.id !== action.payload.id);
+export default createReducer([],{
+    [bugAddedArrow.type] : (bugs,action) => {
+       bugs.push({
+        id : ++lastId,
+        description : action.payload.description,
+        resolved : false
+    })
+    },
 
-    else if(action.type === bugResolved.type)
-    return state.map(bug=> bug.id !== action.payload.id ? bug : {...bug , resolved: true});
+    [bugResolved.type] : (bugs, action) =>{
+       const index = bugs.findIndex(bug=> bug.id === action.payload.id);
+       bugs[index].resolved = true;
+    }
+});
 
-    return state;
-}
+//without toolkit
+// export default function reducer(state = [], action){
+//     if(action.type === bugAddedArrow.type)
+//     return[
+//         ...state,
+//         {
+//             id : ++lastId,
+//             description : action.payload.description,
+//             resolved : false
+//         }
+//     ];
+//     else if(action.type === bugRemoved.type)
+//     return state.filter(bug=> bug.id !== action.payload.id);
+
+//     else if(action.type === bugResolved.type)
+//     return state.map(bug=> bug.id !== action.payload.id ? bug : {...bug , resolved: true});
+
+//     return state;
+// }
 
 //with switch
 
