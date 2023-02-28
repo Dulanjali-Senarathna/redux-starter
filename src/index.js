@@ -20,6 +20,10 @@ import {bugAddedArrow,bugResolved, bugAssignedToUser ,getUnresolvedBugs, getBugs
 import configureStore from './store/configureStore';
 import { userAdded } from './store/users';
 
+//without redux toolkit call middleware
+import { applyMiddleware } from 'redux';
+const storenew = createStore(applyMiddleware(logger));
+
 const store = configureStore();
 
 // store.state = 1;
