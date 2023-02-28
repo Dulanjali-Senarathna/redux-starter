@@ -15,6 +15,7 @@
 
 // console.log(store.getState());
 
+import {projectAdded} from './store/projects';
 import * as actions from './store/bugs';
 import configureStore from './store/configureStore';
 
@@ -27,10 +28,12 @@ store.subscribe(()=>{
     console.log("Store changed!");
 });
 
- store.dispatch(actions.bugAddedArrow({description:"Bug 1"}));
- store.dispatch(actions.bugAddedArrow({description:"Bug 2"}));
- store.dispatch(actions.bugAddedArrow({description:"Bug 3"}));
- store.dispatch(actions.bugResolved({id:1}));
+store.dispatch(projectAdded({name: "Project 1"}));
+
+  store.dispatch(actions.bugAddedArrow({description:"Bug 1"}));
+  store.dispatch(actions.bugAddedArrow({description:"Bug 2"}));
+  store.dispatch(actions.bugAddedArrow({description:"Bug 3"}));
+  store.dispatch(actions.bugResolved({id:1}));
 console.log(store.getState());
 
 
