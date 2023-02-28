@@ -1,45 +1,61 @@
-//action types
-const BUG_ADDED = "bugAdded";
- const BUG_REMOVED = "bugRemoved";
- const BUG_RESOLVED = "bugResolved";
+import { createAction } from "@reduxjs/toolkit";
 
-//action creators
-export function bugAdded(description){
-    return {
-        type: BUG_ADDED ,
-        payload: {
-        description: description
-        }
-    };
-};
+// const bugUpdated = createAction("bugUpdated");
+// console.log(bugUpdated({id:1}));
+
+//action types - old code
+// const BUG_ADDED = "bugAdded";
+//  const BUG_REMOVED = "bugRemoved";
+//  const BUG_RESOLVED = "bugResolved";
+
+//action creators - old without arrow function
+// export function bugAdded(description){
+//     return {
+//         type: BUG_ADDED ,
+//         payload: {
+//         description: description
+//         }
+//     };
+// };
 
 //re-write above code using arrow function
-export const bugAddedArrow = description => ({
+// export const bugAddedArrow = description => ({
     
-        type: BUG_ADDED ,
-        payload: {
-        description: description //can re write using short hand syntax - description
-        }
+//         type: BUG_ADDED ,
+//         payload: {
+//         description: description //can re write using short hand syntax - description
+//         }
     
-});
+// });
 
-export function bugRemoved(id){
-    return {
-        type: BUG_REMOVED ,
-        payload: {
-        id:id
-        }
-    };
-};
+//re - write above code with redux toolkit
+export const bugAddedArrow = createAction("bugAdded");
 
-export function bugResolved(id){
-    return {
-        type: BUG_RESOLVED,
-        payload : {
-            id:id
-        }
-    }
-}
+
+// export function bugRemoved(id){
+//     return {
+//         type: BUG_REMOVED ,
+//         payload: {
+//         id:id
+//         }
+//     };
+// };
+
+//re - write above code with redux toolkit
+export const bugRemoved = createAction("bugRemoved");
+
+// export function bugResolved(id){
+//     return {
+//         type: BUG_RESOLVED,
+//         payload : {
+//             id:id
+//         }
+//     }
+// }
+
+//re - write above code with redux toolkit
+
+export const bugResolved = createAction("bugResolved");
 
 //reducer
 //[] simple array to represent store
@@ -47,7 +63,7 @@ export function bugResolved(id){
 let lastId=0;
 
 export default function reducer(state = [], action){
-    if(action.type === BUG_ADDED)
+    if(action.type === bugAddedArrow.type)
     return[
         ...state,
         {
@@ -56,10 +72,10 @@ export default function reducer(state = [], action){
             resolved : false
         }
     ];
-    else if(action.type === BUG_REMOVED)
+    else if(action.type === bugRemoved.type)
     return state.filter(bug=> bug.id !== action.payload.id);
 
-    else if(action.type === BUG_RESOLVED)
+    else if(action.type === bugResolved.type)
     return state.map(bug=> bug.id !== action.payload.id ? bug : {...bug , resolved: true});
 
     return state;

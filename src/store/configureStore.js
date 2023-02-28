@@ -5,7 +5,7 @@ import reducer from "./bugs";
 
 export default function (){
 //getting store enhancer , allows store to talk to redux devtools
-return createStore({
+return configureStore({
     reducer: reducer
 });
 }
