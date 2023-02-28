@@ -16,8 +16,9 @@
 // console.log(store.getState());
 
 import {projectAdded} from './store/projects';
-import {bugAddedArrow,bugResolved,getUnresolvedBugs} from './store/bugs';
+import {bugAddedArrow,bugResolved, bugAssignedToUser ,getUnresolvedBugs, getBugsByUser} from './store/bugs';
 import configureStore from './store/configureStore';
+import { userAdded } from './store/users';
 
 const store = configureStore();
 
@@ -28,12 +29,15 @@ store.subscribe(()=>{
     console.log("Store changed!");
 });
 
-store.dispatch(projectAdded({name: "Project 1"}));
-
+  store.dispatch(userAdded({name: "User 1"}));
+  store.dispatch(userAdded({name: "User 2"}));
+  store.dispatch(projectAdded({name: "Project 1"}));
   store.dispatch(bugAddedArrow({description:"Bug 1"}));
   store.dispatch(bugAddedArrow({description:"Bug 2"}));
   store.dispatch(bugAddedArrow({description:"Bug 3"}));
+  store.dispatch(bugAssignedToUser({bugId: 1, userId:1}));
   store.dispatch(bugResolved({id:1}));
+
 console.log(store.getState());
 
 //way 1
@@ -46,5 +50,10 @@ console.log(unResolved);
 //console.log(unResolved === b) return false.it means when re call this function returns diffrent outputs. to avoid this, we use memoization
 //to implement this we use librabry called reselect
 //after using memization, abouve output return true
+
+//get bugs for given  user
+const bugs = getBugsByUser(1)(store.getState());
+console.log(bugs);
+
 
 
