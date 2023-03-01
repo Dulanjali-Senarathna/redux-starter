@@ -26,6 +26,11 @@ import { applyMiddleware } from 'redux';
 
 const store = configureStore();
 
+store.dispatch((dispatch, getState) =>{
+    dispatch({type: 'bugsReceived', bugs: [1,2,3]});
+    console.log(getState());
+});
+
 // store.state = 1;
 // console.log(store);
 
