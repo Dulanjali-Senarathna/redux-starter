@@ -17,8 +17,19 @@ const slice = createSlice({
     },
 
     reducers : {
+
+        bugsRequested: (bugs, action) =>{
+            bugs.loading = true;
+        },
+
         bugsReceived: (bugs, action) =>{
             bugs.list = action.payload;
+            bugs.loading = false;
+        },
+
+        bugsRequestFailed: (bugs, action) =>{
+            bugs.loading = false;
+            
         },
         //assign a bug to user
 
@@ -61,15 +72,16 @@ export const getBugsByUser = userId => createSelector(
     bugs => bugs.list.filter(bug=> bug.userId === userId)
 )
 
-export const {bugAddedArrow, bugResolved, bugAssignedToUser, bugsReceived} = slice.actions
+export const {bugAddedArrow, bugResolved, bugAssignedToUser, bugsReceived, bugsRequested, bugsRequestFailed} = slice.actions
 export default slice.reducer;
 
 //Action creators
 const url =  "/bugs";
 export const loadBugs = () => apiCallBegan({
     url,
+    onStart: bugsRequested.type,
     onSuccess: bugsReceived.type,
-    
+    onError: bugsRequestFailed.type
   });
 
 // const bugUpdated = createAction("bugUpdated");
