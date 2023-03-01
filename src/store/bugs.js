@@ -7,18 +7,25 @@ let lastId=0;
 
 const slice = createSlice({
     name : 'bugs',
-    initialState: [],
+    //1st implementation initial state is empty array. now change it to list of objects
+    //initialState: [],
+    initialState:{
+        list: [],
+        loading: false,
+        lastFetch: null
+    },
+
     reducers : {
         //assign a bug to user
 
         bugAssignedToUser: (bugs, action) =>{
             const {bugId , userId} = action.payload;
-            const index = bugs.findIndex(bug=> bug.id === bugId);
-            bugs[index].userId = userId;
+            const index = bugs.list.findIndex(bug=> bug.id === bugId);
+            bugs.list[index].userId = userId;
         },
 
         bugAddedArrow: (bugs,action) => {
-            bugs.push({
+            bugs.list.push({
                 id : ++lastId,
                 description : action.payload.description,
                 resolved : false
@@ -26,8 +33,8 @@ const slice = createSlice({
         },
 
         bugResolved: (bugs, action) =>{
-            const index = bugs.findIndex(bug=> bug.id === action.payload.id);
-            bugs[index].resolved = true;
+            const index = bugs.list.findIndex(bug=> bug.id === action.payload.id);
+            bugs.list[index].resolved = true;
         }
     }
 });
@@ -40,12 +47,12 @@ export const getUnresolvedBugs = createSelector(
     state => state.entities.bugs,
     //we can pass multiple selector functions in here
     state => state.entities.projects,
-    (bugs, projects) => bugs.filter(bug=> !bug.resolved) //  if bugs not change, result is not execute again
+    (bugs, projects) => bugs.list.filter(bug=> !bug.resolved) //  if bugs not change, result is not execute again
 );
 
 export const getBugsByUser = userId => createSelector(
     state => state.entities.bugs, //output of this, is input of the rrsult function.(below one)
-    bugs => bugs.filter(bug=> bug.userId === userId)
+    bugs => bugs.list.filter(bug=> bug.userId === userId)
 )
 
 export const {bugAddedArrow, bugResolved, bugAssignedToUser} = slice.actions
