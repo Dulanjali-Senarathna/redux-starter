@@ -1,6 +1,7 @@
 import { createSlice} from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { apiCallBegan } from './api';
+import moment from 'moment'
 //reducer
 //[] simple array to represent store
 // with if else
@@ -25,6 +26,7 @@ const slice = createSlice({
         bugsReceived: (bugs, action) =>{
             bugs.list = action.payload;
             bugs.loading = false;
+            bugs.lastFetch = Date.now();
         },
 
         bugsRequestFailed: (bugs, action) =>{
@@ -77,12 +79,21 @@ export default slice.reducer;
 
 //Action creators
 const url =  "/bugs";
-export const loadBugs = () => apiCallBegan({
+export const loadBugs = ()=> (dispatch,getState) =>{
+   const {lastFetch} = getState().entities.bugs;
+    
+  const diffInMinutes =  moment().diff(moment(lastFetch),'minutes');
+  if(diffInMinutes < 10) return;
+
+   dispatch (apiCallBegan({
     url,
     onStart: bugsRequested.type,
     onSuccess: bugsReceived.type,
     onError: bugsRequestFailed.type
-  });
+  }));
+}
+
+
 
 // const bugUpdated = createAction("bugUpdated");
 // console.log(bugUpdated({id:1}));
