@@ -19,12 +19,19 @@ import {projectAdded} from './store/projects';
 import {bugAddedArrow,bugResolved, bugAssignedToUser ,getUnresolvedBugs, getBugsByUser} from './store/bugs';
 import configureStore from './store/configureStore';
 import { userAdded } from './store/users';
+import * as actions from './store/api';
 
 //without redux toolkit call middleware
 import { applyMiddleware } from 'redux';
 //const storenew = createStore(applyMiddleware(logger));
 
 const store = configureStore();
+
+store.dispatch(actions.apiCallBegan({
+  url: "/bugs",
+  onSuccess: "bugsReceived",
+  onError: actions.apiCallFailed.type
+}));
 
 //  store.dispatch((dispatch, getState) =>{
 //      dispatch({type: 'bugsReceived', bugs: [1,2,3]});
@@ -36,14 +43,7 @@ const store = configureStore();
 //     payload: {message: "An error occured"}
 // });
 
-store.dispatch( {
-  type : "apiCallBegan",
-  payload : {
-      url: "/bugs",
-      onSuccess: "bugsReceived",
-      onError: "apiRequestFailed"
-  }
-});
+
 
 // store.state = 1;
 // console.log(store);
