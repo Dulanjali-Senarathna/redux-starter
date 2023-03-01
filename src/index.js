@@ -31,9 +31,18 @@ const store = configureStore();
 //      console.log(getState());
 //  });
 
-store.dispatch({
-    type:"error",
-    payload: {message: "An error occured"}
+// store.dispatch({
+//     type:"error",
+//     payload: {message: "An error occured"}
+// });
+
+store.dispatch( {
+  type : "apiCallBegan",
+  payload : {
+      url: "/bugs",
+      onSuccess: "bugsReceived",
+      onError: "apiRequestFailed"
+  }
 });
 
 // store.state = 1;
