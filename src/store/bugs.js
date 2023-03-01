@@ -5,7 +5,6 @@ import moment from 'moment'
 //reducer
 //[] simple array to represent store
 // with if else
-let lastId=0;
 
 const slice = createSlice({
     name : 'bugs',
@@ -42,11 +41,7 @@ const slice = createSlice({
         },
 
         bugAddedArrow: (bugs,action) => {
-            bugs.list.push({
-                id : ++lastId,
-                description : action.payload.description,
-                resolved : false
-            })
+            bugs.list.push(action.payload)
         },
 
         bugResolved: (bugs, action) =>{
@@ -91,7 +86,17 @@ export const loadBugs = ()=> (dispatch,getState) =>{
     onSuccess: bugsReceived.type,
     onError: bugsRequestFailed.type
   }));
-}
+};
+
+export const addBug = bug => apiCallBegan({
+
+   url,
+   method: "post",
+   data: bug,
+   onSuccess: bugAddedArrow.type
+})
+
+
 
 
 

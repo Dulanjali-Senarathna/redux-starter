@@ -19,7 +19,7 @@ import {projectAdded} from './store/projects';
 import {bugAddedArrow,bugResolved, bugAssignedToUser ,getUnresolvedBugs, getBugsByUser} from './store/bugs';
 import configureStore from './store/configureStore';
 import { userAdded } from './store/users';
-import { loadBugs } from './store/bugs';
+import { addBug } from './store/bugs';
 
 //without redux toolkit call middleware
 import { applyMiddleware } from 'redux';
@@ -28,9 +28,9 @@ import { applyMiddleware } from 'redux';
 const store = configureStore();
 
 //UI Layer
-store.dispatch(loadBugs());
+store.dispatch(addBug({description: 'a'}));
 
-setTimeout(() => store.dispatch(loadBugs()),200);
+//setTimeout(() => store.dispatch(loadBugs()),200);
 
 //  store.dispatch((dispatch, getState) =>{
 //      dispatch({type: 'bugsReceived', bugs: [1,2,3]});
