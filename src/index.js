@@ -22,7 +22,7 @@ import { userAdded } from './store/users';
 
 //without redux toolkit call middleware
 import { applyMiddleware } from 'redux';
-const storenew = createStore(applyMiddleware(logger));
+//const storenew = createStore(applyMiddleware(logger));
 
 const store = configureStore();
 
