@@ -20,7 +20,7 @@ import {bugAddedArrow,bugResolved, bugAssignedToUser ,getUnresolvedBugs, getBugs
 import configureStore from './store/configureStore';
 import { userAdded } from './store/users';
 import { addBug } from './store/bugs';
-import { loadBugs, resolveBug } from './store/bugs';
+import { loadBugs, resolveBug , assignBugToUser} from './store/bugs';
 
 //without redux toolkit call middleware
 import { applyMiddleware } from 'redux';
@@ -31,7 +31,7 @@ const store = configureStore();
 //UI Layer
 store.dispatch(loadBugs());
 
-setTimeout(() => store.dispatch(resolveBug(1)),2000);
+setTimeout(() => store.dispatch(assignBugToUser(1,4)),2000);
 //setTimeout(() => store.dispatch(loadBugs()),200);
 
 //  store.dispatch((dispatch, getState) =>{
