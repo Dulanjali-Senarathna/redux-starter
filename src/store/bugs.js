@@ -2,6 +2,7 @@ import { createSlice} from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { apiCallBegan } from './api';
 import moment from 'moment'
+import axios from "axios";
 //reducer
 //[] simple array to represent store
 // with if else
@@ -72,7 +73,7 @@ export const getBugsByUser = userId => createSelector(
     state => state.entities.bugs, //output of this, is input of the rrsult function.(below one)
     bugs => bugs.list.filter(bug=> bug.userId === userId)
 )
-const {bugAddedArrow, bugResolved, bugAssignedToUser, bugsReceived, bugsRequested, bugsRequestFailed} = slice.actions
+export const {bugAddedArrow, bugResolved, bugAssignedToUser, bugsReceived, bugsRequested, bugsRequestFailed} = slice.actions
 export default slice.reducer;
 
 //Action creators
@@ -91,14 +92,27 @@ export const loadBugs = ()=> (dispatch,getState) =>{
   }));
 };
 
+//make an api call
+//promise resolved => dispatch(success)
+export const addBug = bug => {
 
-export const addBug = bug => apiCallBegan({
+    try{
+        const response = axios.post(url,bug);
+        dispatch(bugAddedArrow(bug));
+    }
+    catch(error){
+        dispatch({type:'error'});
+    }
+   
+}
 
-   url,
-   method: "post",
-   data: bug,
-   onSuccess: bugAddedArrow.type
-});
+// export const addBug = bug => apiCallBegan({
+
+//    url,
+//    method: "post",
+//    data: bug,
+//    onSuccess: bugAddedArrow.type
+// });
 
 export const resolveBug = id => apiCallBegan({
     //bugs
