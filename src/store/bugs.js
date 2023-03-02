@@ -72,8 +72,7 @@ export const getBugsByUser = userId => createSelector(
     state => state.entities.bugs, //output of this, is input of the rrsult function.(below one)
     bugs => bugs.list.filter(bug=> bug.userId === userId)
 )
-
-export const {bugAddedArrow, bugResolved, bugAssignedToUser, bugsReceived, bugsRequested, bugsRequestFailed} = slice.actions
+const {bugAddedArrow, bugResolved, bugAssignedToUser, bugsReceived, bugsRequested, bugsRequestFailed} = slice.actions
 export default slice.reducer;
 
 //Action creators
